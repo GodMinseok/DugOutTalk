@@ -17,5 +17,12 @@ public class Member {
     @NotEmpty
     private String password;
 
-    //이메일, 응원하는 팀, 닉네임 추가 예정
+    @NotEmpty
+    private String email; //이메일
+
+    @NotEmpty
+    private String favoriteTeam; //응원하는 팀
+
+    @NotEmpty
+    private String nickName; //닉네임
 }
