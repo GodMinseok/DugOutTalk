@@ -25,6 +25,9 @@ public class TestDataInit {
         Member member = new Member();
         member.setLoginId("test");
         member.setPassword("test!");
+        member.setEmail("test@test.com");
+        member.setFavoriteTeam("롯데 자이언츠");
+        member.setNickName("도루왕 이대호");
         member.setName("테스터");
 
         memberRepository.save(member);
