@@ -9,8 +9,14 @@
     <div class="py-5 text-center">
         <h2>홈 화면</h2>
     </div>
-    <h4 class="mb-3" th:text="|로그인: ${member.name}|">로그인 사용자 이름</h4>
+
+    <!-- 사용자 정보 표시 -->
+    <h4 class="mb-3" th:text="|로그인: ${member.name} (닉네임: ${member.nickName})|">로그인 사용자</h4>
+    <p><strong>이메일:</strong> <span th:text="${member.email}"></span></p>
+    <p><strong>응원하는 팀:</strong> <span th:text="${member.favoriteTeam}"></span></p>
+
     <hr class="my-4">
+
     <div class="row">
         <div class="col">
             <form th:action="@{/logout}" method="post">
@@ -20,6 +26,7 @@
             </form>
         </div>
     </div>
+
     <hr class="my-4">
 </div> <!-- /container -->
 </body>
