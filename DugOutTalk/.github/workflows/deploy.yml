@@ -1,0 +1,37 @@
+name: Deploy to AWS EC2
+
+on:
+  push:
+    branches:
+      - main  # main 브랜치에 푸시될 때마다 자동 배포
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # GitHub Actions가 사용할 환경을 설정 (우리는 Ubuntu 환경을 사용할 거임)
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  # GitHub 리포지토리에서 소스 코드 가져오기
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'  # Java 17을 사용할 거임
+          distribution: 'adoptopenjdk'  # AdoptOpenJDK로 JDK 설정
+
+      - name: Build with Gradle
+        run: ./gradlew build  # Gradle을 사용하여 프로젝트 빌드
+
+      - name: Deploy to EC2
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          EC2_IP: ${{ secrets.EC2_IP }}
+          EC2_USER: ${{ secrets.EC2_USER }}
+          EC2_KEY: ${{ secrets.EC2_KEY }}
+        run: |
+          # EC2로 빌드된 JAR 파일 전송
+          scp -i $EC2_KEY build/libs/DugOutTalk-0.0.1-SNAPSHOT.jar $EC2_USER@$EC2_IP:/home/ubuntu/DugOutTalk_Project/DugOutTalk-0.0.1-SNAPSHOT.jar
+          
+          # EC2에서 애플리케이션 실행
+          ssh -i $EC2_KEY $EC2_USER@$EC2_IP 'nohup java -jar /home/ubuntu/DugOutTalk_Project/DugOutTalk-0.0.1-SNAPSHOT.jar --server.port=8080 > /home/ubuntu/DugOutTalk_Project/log.txt 2>&1 &'
