@@ -1,28 +1,40 @@
 package hello.DugOutTalk.domain.member;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Entity
+@Getter
+@Setter
 public class Member {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
-    private String loginId; //로그인 ID
+    @Column(nullable = false, unique = true)
+    private String loginId;
 
-    @NotEmpty
-    private String name; //사용자 이름
+    @Column(nullable = false)
+    private String name;
 
-    @NotEmpty
-    private String password;
+    @Column(nullable = false, unique = true)
+    private String email;
 
-    @NotEmpty
-    private String email; //이메일
+    @Column(nullable = false)
+    private String favoriteTeam;
 
-    @NotEmpty
-    private String favoriteTeam; //응원하는 팀
+    @Column(nullable = false, unique = true)
+    private String nickName;
 
-    @NotEmpty
-    private String nickName; //닉네임
+    @Column(nullable = false)
+    private String password; // 비밀번호는 암호화하여 저장
+
+    public void encodePassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(this.password);
+    }
 }
+
