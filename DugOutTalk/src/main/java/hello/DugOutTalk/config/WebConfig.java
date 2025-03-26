@@ -1,7 +1,6 @@
-package hello.DugOutTalk;
+package hello.DugOutTalk.config;
 
-
-import hello.DugOutTalk.web.argumentresolver.LoginMemberArgumentResolver;
+import hello.DugOutTalk.domain.argument.LoginMemberArgumentResolver;
 import hello.DugOutTalk.web.interceptor.LogInterceptor;
 import hello.DugOutTalk.web.interceptor.LoginCheckInterceptor;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +9,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
+
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
