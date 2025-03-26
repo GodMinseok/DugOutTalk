@@ -1,10 +1,9 @@
 package hello.DugOutTalk.domain.member;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 @Getter
@@ -37,4 +36,3 @@ public class Member {
         this.password = passwordEncoder.encode(this.password);
     }
 }
-
