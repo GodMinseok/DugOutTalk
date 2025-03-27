@@ -24,5 +24,8 @@ public class MemberService {
         if (memberRepository.existsByEmail(member.getEmail())) {
             throw new DuplicateMemberException("이미 사용 중인 이메일입니다.");
         }
+        if (memberRepository.existsByNickName(member.getNickName())) {
+            throw new DuplicateMemberException("이미 사용 중인 닉네임입니다.");
+        }
     }
 }
