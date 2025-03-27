@@ -1,8 +1,8 @@
 package hello.DugOutTalk.web.member;
 
-
+import hello.DugOutTalk.domain.DuplicateMemberException;
 import hello.DugOutTalk.domain.member.Member;
-import hello.DugOutTalk.domain.member.MemberRepository;
+import hello.DugOutTalk.domain.member.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/members")
 public class MemberController {
 
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     @GetMapping("/add")
     public String addForm(@ModelAttribute("member") Member member) {
@@ -27,11 +26,18 @@ public class MemberController {
 
     @PostMapping("/add")
     public String save(@Valid @ModelAttribute Member member, BindingResult bindingResult) {
+        // 기본 유효성 검사
         if (bindingResult.hasErrors()) {
             return "members/addMemberForm";
         }
 
-        memberRepository.save(member);
+        try {
+            memberService.register(member);
+        } catch (DuplicateMemberException e) {
+            bindingResult.reject("globalError", e.getMessage()); // 글로벌 에러 추가
+            return "members/addMemberForm";
+        }
+
         return "redirect:/";
     }
 }

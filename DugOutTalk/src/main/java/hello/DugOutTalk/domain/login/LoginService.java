@@ -1,6 +1,5 @@
 package hello.DugOutTalk.domain.login;
 
-
 import hello.DugOutTalk.domain.member.Member;
 import hello.DugOutTalk.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;

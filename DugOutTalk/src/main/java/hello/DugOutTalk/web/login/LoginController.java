@@ -1,9 +1,8 @@
 package hello.DugOutTalk.web.login;
 
-
 import hello.DugOutTalk.domain.login.LoginService;
 import hello.DugOutTalk.domain.member.Member;
-import hello.DugOutTalk.web.SessionConst;
+import hello.DugOutTalk.web.session.SessionConst;
 import hello.DugOutTalk.web.session.SessionManager;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 
 @Slf4j
 @Controller
@@ -38,7 +36,7 @@ public class LoginController {
     @PostMapping("/login")
     public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult,
                         @RequestParam(value = "redirectURL", defaultValue = "/") String redirectURL
-                        , HttpServletRequest request) {
+            , HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return "login/loginForm";
         }
