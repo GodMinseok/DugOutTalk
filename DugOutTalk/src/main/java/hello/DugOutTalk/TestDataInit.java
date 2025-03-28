@@ -26,7 +26,7 @@ public class TestDataInit {
         if (existingMember.isEmpty()) {
             Member member = new Member();
             member.setLoginId(testLoginId);
-            member.setPassword("test!");
+            member.setPassword("test1234");
             member.setEmail("test@test.com");
             member.setFavoriteTeam("롯데 자이언츠");
             member.setNickName("도루왕 이대호");
