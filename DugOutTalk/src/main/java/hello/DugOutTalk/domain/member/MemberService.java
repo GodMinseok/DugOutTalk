@@ -28,4 +28,10 @@ public class MemberService {
             throw new DuplicateMemberException("이미 사용 중인 닉네임입니다.");
         }
     }
+
+    private void validatePasswordMatch(Member member) {
+        if (!member.getPassword().equals(member.getConfirmPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+    }
 }
