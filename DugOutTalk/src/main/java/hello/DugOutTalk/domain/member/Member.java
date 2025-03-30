@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Map;
+
 @Entity
 @Getter
 @Setter
@@ -44,6 +46,9 @@ public class Member {
     @Transient
     @NotBlank(message = "비밀번호 확인을 위해 입력해주세요.")
     private String confirmPassword;
+
+    @Column(nullable = false)
+    private String favoriteTeamLogo; // 팀 로고 URL 저장
 
 //    public void encodePassword(PasswordEncoder passwordEncoder) {
 //        this.password = passwordEncoder.encode(this.password);
