@@ -31,6 +31,7 @@ public class TestDataInit {
             member.setEmail("test@test.com");
             member.setFavoriteTeam("롯데 자이언츠");
             member.setNickName("도루왕 이대호");
+            member.setFavoriteTeamLogo("/images/logos/lotte.png");
             member.setName("테스터");
 
             memberRepository.save(member);
