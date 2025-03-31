@@ -3,19 +3,77 @@
 <head>
   <meta charset="utf-8">
   <link th:href="@{/css/bootstrap.min.css}" href="../css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .team-card {
+      width: 200px;
+      height: 250px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 10px;
+      background-color: #f8f9fa;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .team-card:hover {
+      transform: scale(1.05);
+    }
+    .mascot-img {
+      width: 100%;
+      height: 70%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .team-info {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+      padding: 5px;
+      background: rgba(255, 255, 255, 0.9);
+      position: absolute;
+      bottom: 0;
+    }
+    .team-logo {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+    .my-page-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+  </style>
 </head>
 <body>
 <div class="container">
+  <button class="btn btn-dark my-page-btn" th:onclick="|location.href='@{/myPage}'|">
+    마이페이지
+  </button>
+
   <div class="py-5 text-center">
-    <h2>메인 화면</h2>
+    <h2>KBO 구단 게시판</h2>
   </div>
-  <div class="row">
-    <div class="col">
-      <button class="w-100 btn btn-dark btn-lg" th:onclick="|location.href='@{/myPage}'|">
-        마이페이지
-      </button>
+
+  <div class="row row-cols-2 row-cols-md-5 g-4">
+    <div class="col" th:each="team : ${teams}">
+      <div class="team-card" th:onclick="|location.href='@{/board/{teamId}(teamId=${team.id})}'|">
+        <img th:src="@{${team.mascotImg}}" class="mascot-img" alt="마스코트">
+        <div class="team-info">
+          <img th:src="@{${team.logoImg}}" class="team-logo" alt="로고">
+          <span th:text="${team.name}">팀 이름</span>
+        </div>
+      </div>
     </div>
   </div>
-</div> <!-- /container -->
+</div>
 </body>
 </html>
