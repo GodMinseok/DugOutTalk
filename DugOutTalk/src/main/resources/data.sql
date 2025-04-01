@@ -1,4 +1,4 @@
-INSERT INTO team (name, logo_img, mascot_img) VALUES
+INSERT IGNORE INTO team (name, logo_img, mascot_img) VALUES
 ('두산 베어스', '/images/logos/doosan.png', '/images/mascots/doosan_msc.webp'),
 ('LG 트윈스', '/images/logos/lg.png', '/images/mascots/lg_msc.webp'),
 ('키움 히어로즈', '/images/logos/kiwoom.png', '/images/mascots/kiwoom_msc.png'),
