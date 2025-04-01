@@ -2,6 +2,7 @@ package hello.DugOutTalk.domain.member;
 
 import hello.DugOutTalk.domain.DuplicateMemberException;
 import hello.DugOutTalk.domain.team.Team;
+import hello.DugOutTalk.domain.team.TeamRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,11 +12,17 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final TeamRepository teamRepository; // 팀 정보를 조회하기 위해 추가
 
     @Transactional
     public Member register(Member member) {
         validateDuplicateMember(member); // 중복 검증
-        Team team = Team.getTeamByName(member.getFavoriteTeam());
+
+        // 기존: Team.getTeamByName(member.getFavoriteTeam());
+        // 변경: 데이터베이스에서 팀 정보 가져오기
+        Team team = teamRepository.findByName(member.getFavoriteTeam())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 팀입니다: " + member.getFavoriteTeam()));
+
         member.setFavoriteTeamLogo(team.getLogoImg()); // 팀 로고 설정
         return memberRepository.save(member);
     }
