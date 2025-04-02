@@ -1,4 +1,4 @@
-package hello.DugOutTalk;
+package hello.DugOutTalk.controller;
 
 import hello.DugOutTalk.domain.login.Login;
 import hello.DugOutTalk.domain.member.Member;
