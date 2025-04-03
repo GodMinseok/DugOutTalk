@@ -6,7 +6,9 @@
 </head>
 <body>
 <h1 th:text="${team.name} + ' 게시판'"></h1>
-<img th:src="@{/images/{logo}(logo=${team.logoImg})}" alt="팀 로고">
+<img th:src="${team.logoImg}" alt="팀 로고">
+
+
 
 <h2>게시글 목록</h2>
 <table>
