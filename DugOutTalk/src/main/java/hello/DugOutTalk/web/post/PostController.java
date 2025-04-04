@@ -1,12 +1,14 @@
 package hello.DugOutTalk.web.post;
 
-
 import hello.DugOutTalk.domain.team.Team;
-
 import hello.DugOutTalk.domain.team.TeamRepository;
+import hello.DugOutTalk.domain.member.Member;
+import hello.DugOutTalk.web.session.SessionConst;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -22,16 +24,28 @@ public class PostController {
     }
 
     @PostMapping("/board/post")
-    public String createPost(@RequestParam Long teamId, @RequestParam String title, @RequestParam String content) {
-        Optional<Team> team = teamRepository.findById(teamId);
+    public String createPost(
+            @RequestParam("teamId") Long teamId,
+            @RequestParam("content") String content,
+            HttpSession session,
+            RedirectAttributes redirectAttributes
+    ) {
+        Optional<Team> teamOpt = teamRepository.findById(teamId);
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
-        if (team.isPresent()) {
-            Post post = new Post(team.get(), title, content);
+        if (teamOpt.isPresent() && loginMember != null) {
+            Team team = teamOpt.get();
+            String nickname = loginMember.getNickName();
+            String email = loginMember.getEmail();
+
+            Post post = new Post(team, content, nickname, email);
             postRepository.save(post);
-            return "redirect:/board/" + team.get().getId(); // 팀 ID를 사용
 
+            return "redirect:/board/" + team.getId();
         }
-        return "error/404";
+
+        redirectAttributes.addFlashAttribute("errorMessage", "게시글 작성 실패: 로그인 또는 팀 정보 누락");
+        return "redirect:/error/404";
     }
 
 }

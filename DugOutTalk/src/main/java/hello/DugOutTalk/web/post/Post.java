@@ -34,14 +34,15 @@ public class Post {
 
     private LocalDateTime createdAt;
 
-    public Post(Team team, String title, String content, String nickname, String email) {
+    // title 제거 + 생성자 수정
+    public Post(Team team, String content, String nickname, String email) {
         if (team == null) throw new IllegalArgumentException("팀 정보가 없습니다!");
         this.team = team;
-        this.title = title;
         this.content = content;
         this.nickname = nickname;
         this.email = email;
         this.createdAt = LocalDateTime.now();
     }
+
 }
 
