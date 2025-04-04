@@ -5,17 +5,20 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor
 @Entity
 public class Post {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id", nullable = false)
-    private Team team; // 어떤 팀 게시판의 글인지 저장
+    private Team team;
 
     @Column(nullable = false)
     private String title;
@@ -23,13 +26,22 @@ public class Post {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    public Post(Team team, String title, String content) {
-        if (team == null) {
-            throw new IllegalArgumentException("팀 정보가 없습니다!");
-        }
+    private String nickname;
+    private String email;
+
+    private int views = 0;
+    private int likes = 0;
+
+    private LocalDateTime createdAt;
+
+    public Post(Team team, String title, String content, String nickname, String email) {
+        if (team == null) throw new IllegalArgumentException("팀 정보가 없습니다!");
         this.team = team;
         this.title = title;
         this.content = content;
+        this.nickname = nickname;
+        this.email = email;
+        this.createdAt = LocalDateTime.now();
     }
-
 }
+
