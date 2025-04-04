@@ -20,5 +20,11 @@ public class Team {
 
     private String logoImg;
     private String mascotImg;
+
+    public Team(String name, String logoImg, String mascotImg) {
+        this.name = name;
+        this.logoImg = logoImg;
+        this.mascotImg = mascotImg;
+    }
 }
 
