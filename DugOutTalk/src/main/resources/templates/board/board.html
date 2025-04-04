@@ -3,30 +3,60 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:text="${team.name} + ' 게시판'">게시판</title>
+    <style>
+        .post-form {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .post-form input[type="text"],
+        .post-form textarea {
+            padding: 5px;
+            font-size: 14px;
+        }
+        .post-form textarea {
+            resize: none;
+        }
+        .profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+    </style>
 </head>
 <body>
 <h1 th:text="${team.name} + ' 게시판'"></h1>
-<img th:src="${team.logoImg}" alt="팀 로고">
+<img th:src="${team.logoImg}" alt="팀 로고" width="100">
 
+<!-- ✍ 글 작성 폼 (상단 가로 정렬) -->
+<form class="post-form" action="/board/post" method="post">
+    <input type="hidden" name="teamId" th:value="${team.id}">
+    <input type="text" name="title" placeholder="제목" required>
+    <textarea name="content" placeholder="내용" rows="1" cols="40" required></textarea>
+    <button type="submit">작성</button>
+</form>
 
-
-<h2>게시글 목록</h2>
-<table>
+<!-- 📋 게시글 목록 -->
+<table border="1">
     <tr>
+        <th>프로필</th>
         <th>제목</th>
         <th>내용</th>
+        <th>닉네임</th>
+        <th>작성 시간</th>
+        <th>조회수</th>
+        <th>좋아요</th>
     </tr>
     <tr th:each="post : ${posts}">
+        <td><img th:src="${team.logoImg}" alt="팀 프로필" class="profile-img"></td>
         <td th:text="${post.title}"></td>
         <td th:text="${post.content}"></td>
+        <td th:text="${post.nickname}"></td>
+        <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+        <td th:text="${post.views}">0</td>
+        <td th:text="${post.likes}">0</td>
     </tr>
 </table>
-
-<form action="/board/post" method="post">
-    <input type="hidden" name="teamId" th:value="${team.id}">
-    <input type="text" name="title" placeholder="제목">
-    <textarea name="content" placeholder="내용"></textarea>
-    <button type="submit">글 작성</button>
-</form>
 </body>
 </html>
