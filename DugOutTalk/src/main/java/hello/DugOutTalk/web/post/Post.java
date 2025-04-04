@@ -20,16 +20,12 @@ public class Post {
     @JoinColumn(name = "team_id", nullable = false)
     private Team team;
 
-    @Column(nullable = false)
-    private String title;
-
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
     private String nickname;
     private String email;
 
-    private int views = 0;
     private int likes = 0;
 
     private LocalDateTime createdAt;
