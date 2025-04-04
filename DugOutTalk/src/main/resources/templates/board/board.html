@@ -79,7 +79,7 @@
     </div>
     <div class="post-content" th:text="${post.content}">내용</div>
     <div>
-        <small th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">작성 시간</small>
+        <small th:text="${@timeUtil.toRelative(post.createdAt)}">작성 시간</small>
     </div>
     <div class="likes">
         ❤️ 좋아요 <span th:text="${post.likes}">0</span>
