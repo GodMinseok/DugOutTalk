@@ -1,27 +1,60 @@
-<!-- templates/board/board.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:text="${team.name} + ' 게시판'">게시판</title>
     <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
         .post-form {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .post-form textarea {
+            width: 500px;
+            height: 80px;
+            font-size: 14px;
+            padding: 8px;
+            resize: none;
+        }
+
+        .profile-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .post-box {
+            border-top: 1px solid #ccc;
+            padding: 15px 0;
+        }
+
+        .post-meta {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 20px;
-        }
-        .post-form input[type="text"],
-        .post-form textarea {
-            padding: 5px;
             font-size: 14px;
+            color: #555;
         }
-        .post-form textarea {
-            resize: none;
+
+        .post-meta small {
+            font-size: 12px;
+            color: #888;
         }
-        .profile-img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+
+        .post-content {
+            margin: 10px 0;
+            font-size: 15px;
+        }
+
+        .likes {
+            font-size: 13px;
+            color: #999;
         }
     </style>
 </head>
@@ -29,34 +62,29 @@
 <h1 th:text="${team.name} + ' 게시판'"></h1>
 <img th:src="${team.logoImg}" alt="팀 로고" width="100">
 
-<!-- ✍ 글 작성 폼 (상단 가로 정렬) -->
+<!-- ✍ 글 작성 폼 -->
 <form class="post-form" action="/board/post" method="post">
+    <img th:src="${team.logoImg}" alt="내 팀 로고" class="profile-img">
     <input type="hidden" name="teamId" th:value="${team.id}">
-    <input type="text" name="title" placeholder="제목" required>
-    <textarea name="content" placeholder="내용" rows="1" cols="40" required></textarea>
+    <textarea name="content" placeholder="내용을 입력하세요" required></textarea>
     <button type="submit">작성</button>
 </form>
 
 <!-- 📋 게시글 목록 -->
-<table border="1">
-    <tr>
-        <th>프로필</th>
-        <th>제목</th>
-        <th>내용</th>
-        <th>닉네임</th>
-        <th>작성 시간</th>
-        <th>조회수</th>
-        <th>좋아요</th>
-    </tr>
-    <tr th:each="post : ${posts}">
-        <td><img th:src="${team.logoImg}" alt="팀 프로필" class="profile-img"></td>
-        <td th:text="${post.title}"></td>
-        <td th:text="${post.content}"></td>
-        <td th:text="${post.nickname}"></td>
-        <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
-        <td th:text="${post.views}">0</td>
-        <td th:text="${post.likes}">0</td>
-    </tr>
-</table>
+<div th:each="post : ${posts}" class="post-box">
+    <div class="post-meta">
+        <img th:src="${team.logoImg}" alt="팀 로고" class="profile-img">
+        <span th:text="${post.nickname}">닉네임</span>
+        <small th:text="'(' + ${post.email} + ')'">이메일</small>
+    </div>
+    <div class="post-content" th:text="${post.content}">내용</div>
+    <div>
+        <small th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">작성 시간</small>
+    </div>
+    <div class="likes">
+        ❤️ 좋아요 <span th:text="${post.likes}">0</span>
+    </div>
+</div>
+
 </body>
 </html>
