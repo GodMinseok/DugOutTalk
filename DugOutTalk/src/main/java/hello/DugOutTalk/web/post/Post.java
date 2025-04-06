@@ -40,5 +40,13 @@ public class Post {
         this.createdAt = LocalDateTime.now();
     }
 
+    public void addLike() {
+        this.likes++;
+    }
+    public void removeLike() {
+        if (this.likes > 0) this.likes--;
+    }
+
+
 }
 
