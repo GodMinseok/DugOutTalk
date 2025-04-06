@@ -6,11 +6,15 @@ import hello.DugOutTalk.domain.member.Member;
 import hello.DugOutTalk.web.session.SessionConst;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Optional;
+import org.springframework.ui.Model; // ← 이거 import 필요
 
 @Controller
 public class PostController {
@@ -22,6 +26,23 @@ public class PostController {
         this.teamRepository = teamRepository;
         this.postRepository = postRepository;
     }
+
+
+    @GetMapping("/team/{teamId}/board")
+    public String showTeamBoard(@PathVariable("teamId") Long teamId, Model model) {
+        Optional<Team> teamOpt = teamRepository.findById(teamId);
+
+        if (teamOpt.isPresent()) {
+            Team team = teamOpt.get();
+            List<Post> posts = postRepository.findByTeam(team); // 팀별 게시글 조회
+            model.addAttribute("team", team);
+            model.addAttribute("posts", posts);
+            return "board/board"; // board.html 템플릿 보여주기
+        }
+
+        return "redirect:/error/404";
+    }
+
 
     @PostMapping("/board/post")
     public String createPost(
