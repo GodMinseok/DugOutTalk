@@ -81,9 +81,14 @@
     <div>
         <small th:text="${@timeUtil.toRelative(post.createdAt)}">작성 시간</small>
     </div>
-    <div class="likes">
-        ❤️ 좋아요 <span th:text="${post.likes}">0</span>
-    </div>
+    <form th:action="@{/board/like/{postId}(postId=${post.id})}" method="post">
+        <input type="hidden" name="teamId" th:value="${team.id}" />
+        <button type="submit" style="background:none;border:none;cursor:pointer;">
+            ❤️ 좋아요 <span th:text="${post.likes}">0</span>
+        </button>
+    </form>
+
+
 </div>
 
 </body>
