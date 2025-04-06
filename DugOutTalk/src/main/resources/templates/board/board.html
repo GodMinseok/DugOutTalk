@@ -62,7 +62,7 @@
 <h1 th:text="${team.name} + ' 게시판'"></h1>
 <img th:src="${team.logoImg}" alt="팀 로고" width="100">
 
-<!-- ✍ 글 작성 폼 -->
+<!-- 글 작성 폼 -->
 <form class="post-form" action="/board/post" method="post">
     <img th:src="${team.logoImg}" alt="내 팀 로고" class="profile-img">
     <input type="hidden" name="teamId" th:value="${team.id}">
@@ -70,7 +70,7 @@
     <button type="submit">작성</button>
 </form>
 
-<!-- 📋 게시글 목록 -->
+<!-- 게시글 목록 -->
 <div th:each="post : ${posts}" class="post-box">
     <div class="post-meta">
         <img th:src="${team.logoImg}" alt="팀 로고" class="profile-img">
@@ -87,8 +87,6 @@
             ❤️ 좋아요 <span th:text="${post.likes}">0</span>
         </button>
     </form>
-
-
 </div>
 
 </body>

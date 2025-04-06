@@ -34,7 +34,7 @@ public class BoardController {
             return "redirect:/main"; // 없는 팀이면 메인 페이지로 이동
         }
 
-        List<Post> posts = postRepository.findByTeam(team.get()); // 해당 팀의 게시글만 조회
+        List<Post> posts = postRepository.findByTeamOrderByCreatedAtDesc(team.get()); // 해당 팀의 게시글만 조회
 
         model.addAttribute("team", team.get()); // 팀 정보 전달
         model.addAttribute("posts", posts); // 해당 팀의 게시글 전달

@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
-import org.springframework.ui.Model; // ← 이거 import 필요
+import org.springframework.ui.Model;
 
 @Controller
 public class PostController {
@@ -34,10 +34,10 @@ public class PostController {
 
         if (teamOpt.isPresent()) {
             Team team = teamOpt.get();
-            List<Post> posts = postRepository.findByTeam(team); // 팀별 게시글 조회
+            List<Post> posts = postRepository.findByTeamOrderByCreatedAtDesc(team);// 팀별 게시글 조회
             model.addAttribute("team", team);
             model.addAttribute("posts", posts);
-            return "board/board"; // board.html 템플릿 보여주기
+            return "board/board";
         }
 
         return "redirect:/error/404";
