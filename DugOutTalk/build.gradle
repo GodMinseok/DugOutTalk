@@ -43,6 +43,10 @@ dependencies {
 	// HikariCP (Spring Boot 기본 데이터베이스 커넥션 풀)
 	implementation 'com.zaxxer:HikariCP'
 }
+bootJar {
+	archiveFileName = 'DugOutTalk-0.0.1-SNAPSHOT.jar'
+}
+
 
 tasks.named('test') {
 	useJUnitPlatform()
