@@ -27,6 +27,29 @@ public class PostController {
         this.postRepository = postRepository;
     }
 
+    @PostMapping("/board/delete/{postId}")
+    public String deletePost(
+            @PathVariable("postId") Long postId,
+            @RequestParam("teamId") Long teamId,
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
+
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        Optional<Post> postOpt = postRepository.findById(postId);
+
+        if (loginMember != null && postOpt.isPresent()) {
+            Post post = postOpt.get();
+            if (post.getEmail().equals(loginMember.getEmail())) {
+                postRepository.delete(post);
+            } else {
+                redirectAttributes.addFlashAttribute("errorMessage", "본인 글만 삭제할 수 있습니다.");
+            }
+        }
+
+        return "redirect:/board/" + teamId;
+    }
+
+
 
     @GetMapping("/team/{teamId}/board")
     public String showTeamBoard(@PathVariable("teamId") Long teamId, Model model) {
