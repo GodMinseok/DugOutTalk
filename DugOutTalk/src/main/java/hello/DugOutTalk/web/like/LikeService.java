@@ -33,6 +33,12 @@ public class LikeService {
             post.addLike();
         }
     }
+
+    @Transactional
+    public void deletePost(Long postId) {
+        postLikeRepository.deleteByPostId(postId); // 좋아요 먼저 삭제
+        postRepository.deleteById(postId);         // 그다음 게시글 삭제
+    }
 }
 
 
