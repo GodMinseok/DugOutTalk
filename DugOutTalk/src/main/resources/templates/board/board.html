@@ -30,6 +30,7 @@
         }
 
         .post-box {
+            position: relative; /* 삭제 버튼 위치를 위한 기준점 */
             border-top: 1px solid #ccc;
             padding: 15px 0;
         }
@@ -56,6 +57,23 @@
             font-size: 13px;
             color: #999;
         }
+
+        /* 삭제 버튼 스타일 */
+        .delete-btn-form {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .delete-btn-form button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
@@ -72,6 +90,15 @@
 
 <!-- 게시글 목록 -->
 <div th:each="post : ${posts}" class="post-box">
+
+    <!-- ✅ 삭제 버튼: 오른쪽 상단 + 작성자 본인만 -->
+    <form th:if="${loginMember != null and loginMember.email == post.email}"
+          th:action="@{/board/delete/{postId}(postId=${post.id})}" method="post"
+          class="delete-btn-form">
+        <input type="hidden" name="teamId" th:value="${team.id}" />
+        <button type="submit">삭제</button>
+    </form>
+
     <div class="post-meta">
         <img th:src="${team.logoImg}" alt="팀 로고" class="profile-img">
         <span th:text="${post.nickname}">닉네임</span>
