@@ -1,10 +1,13 @@
 package hello.DugOutTalk.controller;
 
+import hello.DugOutTalk.domain.member.Member;
 import hello.DugOutTalk.domain.team.Team;
 import hello.DugOutTalk.domain.team.TeamRepository;
 
 import hello.DugOutTalk.web.post.Post;
 import hello.DugOutTalk.web.post.PostRepository;
+import hello.DugOutTalk.web.session.SessionConst;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,19 +30,22 @@ public class BoardController {
     }
 
     @GetMapping("/{id}")
-    public String teamBoard(@PathVariable("id") Long id, Model model) {
-        Optional<Team> team = teamRepository.findById(id); // 팀 이름으로 DB 조회
-
+    public String teamBoard(@PathVariable("id") Long id, Model model, HttpSession session) {
+        Optional<Team> team = teamRepository.findById(id);
         if (team.isEmpty()) {
-            return "redirect:/main"; // 없는 팀이면 메인 페이지로 이동
+            return "redirect:/main";
         }
 
-        List<Post> posts = postRepository.findByTeamOrderByCreatedAtDesc(team.get()); // 해당 팀의 게시글만 조회
+        List<Post> posts = postRepository.findByTeamOrderByCreatedAtDesc(team.get());
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER); // 로그인 사용자 정보
 
-        model.addAttribute("team", team.get()); // 팀 정보 전달
-        model.addAttribute("posts", posts); // 해당 팀의 게시글 전달
-        return "board/board"; // 공통 게시판 페이지로 이동
+        model.addAttribute("team", team.get());
+        model.addAttribute("posts", posts);
+        model.addAttribute("loginMember", loginMember); // 추가
+
+        return "board/board";
     }
+
 
 }
 
