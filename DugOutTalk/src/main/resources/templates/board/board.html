@@ -91,7 +91,7 @@
 <!-- 게시글 목록 -->
 <div th:each="post : ${posts}" class="post-box">
 
-    <!-- ✅ 삭제 버튼: 오른쪽 상단 + 작성자 본인만 -->
+    <!-- 삭제 버튼: 오른쪽 상단 + 작성자 본인만 -->
     <form th:if="${loginMember != null and loginMember.email == post.email}"
           th:action="@{/board/delete/{postId}(postId=${post.id})}" method="post"
           class="delete-btn-form">
