@@ -59,11 +59,14 @@
 <body>
 <div class="container position-relative">
   <div class="top-right-buttons">
-    <button class="btn btn-dark" th:onclick="|location.href='@{/myPage}'|">마이페이지</button>
-    <button class="btn btn-outline-primary" th:onclick="|location.href='@{/score}'|">경기 순위</button>
-    <button class="btn btn-outline-success" th:onclick="|location.href='@{/schedule}'|">경기 일정</button>
-    <button class="btn btn-outline-danger" th:onclick="|location.href='@{/result}'|">경기 결과</button>
+    <button class="btn btn-outline-primary">경기 순위</button>
+    <button class="btn btn-outline-success">경기 일정</button>
+    <button class="btn btn-outline-danger">경기 결과</button>
+    <button class="btn btn-dark" th:onclick="|location.href='@{/myPage}'|" style="margin-left: auto;">
+      마이페이지
+    </button>
   </div>
+
 
   <div class="py-5 text-center">
     <h2>KBO 구단 게시판</h2>
