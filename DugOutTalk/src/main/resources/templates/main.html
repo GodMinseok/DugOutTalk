@@ -46,18 +46,24 @@
       height: 40px;
       margin-right: 10px;
     }
-    .my-page-btn {
+    .top-right-buttons {
       position: absolute;
       top: 20px;
       right: 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
   </style>
 </head>
 <body>
-<div class="container">
-  <button class="btn btn-dark my-page-btn" th:onclick="|location.href='@{/myPage}'|">
-    마이페이지
-  </button>
+<div class="container position-relative">
+  <div class="top-right-buttons">
+    <button class="btn btn-dark" th:onclick="|location.href='@{/myPage}'|">마이페이지</button>
+    <button class="btn btn-outline-primary" th:onclick="|location.href='@{/score}'|">경기 순위</button>
+    <button class="btn btn-outline-success" th:onclick="|location.href='@{/schedule}'|">경기 일정</button>
+    <button class="btn btn-outline-danger" th:onclick="|location.href='@{/result}'|">경기 결과</button>
+  </div>
 
   <div class="py-5 text-center">
     <h2>KBO 구단 게시판</h2>
