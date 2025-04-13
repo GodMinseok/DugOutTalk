@@ -17,6 +17,7 @@ public class MemberService {
     @Transactional
     public Member register(Member member) {
         validateDuplicateMember(member); // 중복 검증
+        validatePasswordMatch(member);
 
         // 기존: Team.getTeamByName(member.getFavoriteTeam());
         // 변경: 데이터베이스에서 팀 정보 가져오기
@@ -24,6 +25,7 @@ public class MemberService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 팀입니다: " + member.getFavoriteTeam()));
 
         member.setFavoriteTeamLogo(team.getLogoImg()); // 팀 로고 설정
+
         return memberRepository.save(member);
     }
 
