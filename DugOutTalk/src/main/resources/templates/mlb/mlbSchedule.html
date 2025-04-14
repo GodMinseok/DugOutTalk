@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head>
+        <title>MLB 경기 일정</title>
+        <link rel="stylesheet" href="/css/mlbSchedule.css">
+    </head>
+</head>
+<body>
+<h1>MLB 경기 일정</h1>
+
+<form action="/mlb/mlbSchedule" method="get">
+    <label for="date">날짜 선택: </label>
+    <input type="date" id="date" name="date" th:value="${selectedDate}">
+    <button type="submit">조회</button>
+</form>
+
+<div class="schedule" th:if="${scheduleData}">
+    <div th:each="date : ${scheduleData.dates}" class="game-date">
+        <h3 th:text="${date.date}"></h3>
+        <ul>
+            <li th:each="game : ${date.games}">
+                <span th:text="${game.teams.away.team.name}"></span> vs
+                <span th:text="${game.teams.home.team.name}"></span>
+                (<span class="status" th:text="${game.status.detailedState}"></span>)
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
