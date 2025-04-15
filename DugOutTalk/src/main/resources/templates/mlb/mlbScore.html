@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>MLB 순위</title>
+    <link rel="stylesheet" href="/css/mlbScore.css">
+</head>
+<body>
+<h1>MLB 리그 순위</h1>
+
+<!-- 예쁜 버튼 -->
+<div class="league-buttons">
+    <a th:href="@{/mlb/mlbScore(leagueId='104')}" th:classappend="${selectedLeagueId == '104'} ? 'active'">
+        내셔널리그
+    </a>
+    <a th:href="@{/mlb/mlbScore(leagueId='103')}" th:classappend="${selectedLeagueId == '103'} ? 'active'">
+        아메리칸리그
+    </a>
+</div>
+
+<div th:if="${standingsData}">
+    <div th:each="record : ${standingsData.records}">
+        <div>
+            <h2 th:text="${(record.league['name']) + ' - ' + (record.division['name'])}"></h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>팀</th>
+                    <th>승</th>
+                    <th>패</th>
+                    <th>승률</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="teamRecord : ${record.teamRecords}">
+                    <td th:text="${teamRecord.team.name}"></td>
+                    <td th:text="${teamRecord.wins}"></td>
+                    <td th:text="${teamRecord.losses}"></td>
+                    <td th:text="${teamRecord.winningPercentage}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
