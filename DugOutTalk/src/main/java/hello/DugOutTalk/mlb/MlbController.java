@@ -33,5 +33,27 @@ public class MlbController {
         model.addAttribute("selectedDate", date);
         return "mlb/mlbSchedule"; // templates/mlb/mlbSchedule.html
     }
+
+    @GetMapping("/mlb/mlbScore")
+    public String getMlbStandings(@RequestParam(value = "leagueId", required = false) String leagueId, Model model) {
+        if (leagueId == null || leagueId.isEmpty()) {
+            leagueId = "103,104"; // 기본값: 둘 다
+        }
+
+        String url = "https://statsapi.mlb.com/api/v1/standings?leagueId=" + leagueId + "&season=2025&standingsTypes=regularSeason";
+        RestTemplate restTemplate = new RestTemplate();
+
+        try {
+            ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class);
+            model.addAttribute("standingsData", response.getBody());
+        } catch (Exception e) {
+            model.addAttribute("standingsData", null);
+        }
+
+        model.addAttribute("selectedLeagueId", leagueId);
+        return "mlb/mlbScore";
+    }
+
+
 }
 
