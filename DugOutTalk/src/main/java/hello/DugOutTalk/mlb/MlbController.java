@@ -55,5 +55,27 @@ public class MlbController {
     }
 
 
+    @GetMapping("/mlb/mlbResult")
+    public String getMlbResults(@RequestParam(value = "date", required = false) String date, Model model) {
+        if (date == null || date.isEmpty()) {
+            date = LocalDate.now().toString();
+        }
+
+        String url = "https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=" + date + "&hydrate=team,linescore";
+        RestTemplate restTemplate = new RestTemplate();
+
+        try {
+            ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class);
+            model.addAttribute("resultData", response.getBody());
+        } catch (Exception e) {
+            model.addAttribute("resultData", null);
+        }
+
+        model.addAttribute("selectedDate", date);
+        return "mlb/mlbResult"; // templates/mlb/mlbResult.html
+    }
+
+
+
 }
 
