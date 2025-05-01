@@ -58,7 +58,7 @@ public class MlbController {
     @GetMapping("/mlb/mlbResult")
     public String getMlbResults(@RequestParam(value = "date", required = false) String date, Model model) {
         if (date == null || date.isEmpty()) {
-            date = LocalDate.now().toString();
+            date = LocalDate.now().toString(); // ISO 형식: yyyy-MM-dd
         }
 
         String url = "https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=" + date + "&hydrate=team,linescore";
@@ -71,9 +71,11 @@ public class MlbController {
             model.addAttribute("resultData", null);
         }
 
+        // 여기가 중요함
         model.addAttribute("selectedDate", date);
-        return "mlb/mlbResult"; // templates/mlb/mlbResult.html
+        return "mlb/mlbResult";
     }
+
 
 
 
