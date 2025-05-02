@@ -9,10 +9,10 @@
 
 <form action="/mlb/mlbResult" method="get">
     <label for="date">날짜 선택: </label>
-    <input type="date" id="date" name="date" th:value="${selectedDate}">
+    <input type="date" id="date" name="date"
+           th:value="${selectedDate != null ? selectedDate : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
     <button type="submit">조회</button>
 </form>
-
 
 <div class="results" th:if="${resultData['dates']}">
     <div th:each="date : ${resultData['dates']}" class="game-date">
