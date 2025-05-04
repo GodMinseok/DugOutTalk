@@ -1,0 +1,12 @@
+.container {
+            max-width: 560px;
+        }
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+        #passwordMatchMessage {
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-top: 5px;
+        }
