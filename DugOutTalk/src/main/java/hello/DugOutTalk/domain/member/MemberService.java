@@ -19,8 +19,6 @@ public class MemberService {
         validateDuplicateMember(member); // 중복 검증
         validatePasswordMatch(member);
 
-        // 기존: Team.getTeamByName(member.getFavoriteTeam());
-        // 변경: 데이터베이스에서 팀 정보 가져오기
         Team team = teamRepository.findByName(member.getFavoriteTeam())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 팀입니다: " + member.getFavoriteTeam()));
 
