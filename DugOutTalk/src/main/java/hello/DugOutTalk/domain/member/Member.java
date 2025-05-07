@@ -41,7 +41,7 @@ public class Member {
     @Column(nullable = false)
     @NotBlank(message = "비밀번호를 입력해주세요.")
     @Size(min = 8, message = "비밀번호는 최소 8자 이상이어야 합니다.")
-    private String password; // 비밀번호는 암호화하여 저장
+    private String password;
 
     @Transient
     @NotBlank(message = "비밀번호 확인을 위해 입력해주세요.")
