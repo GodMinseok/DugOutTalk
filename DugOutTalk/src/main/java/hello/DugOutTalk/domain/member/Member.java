@@ -48,9 +48,6 @@ public class Member {
     private String confirmPassword;
 
     @Column(nullable = false)
-    private String favoriteTeamLogo; // 팀 로고 URL 저장
+    private String favoriteTeamLogo;
 
-//    public void encodePassword(PasswordEncoder passwordEncoder) {
-//        this.password = passwordEncoder.encode(this.password);
-//    }
 }
