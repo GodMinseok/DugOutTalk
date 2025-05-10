@@ -20,7 +20,7 @@ public class MainController {
     public String mainPage(Model model) {
         List<Team> teams = teamService.getAllTeams();
         model.addAttribute("teams", teams);
-        return "main"; // main.html 렌더링
+        return "main";
     }
 }
 
