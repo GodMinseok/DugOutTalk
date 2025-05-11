@@ -37,7 +37,6 @@ public class Post {
 
     private LocalDateTime createdAt;
 
-    // title 제거 + 생성자 수정
     public Post(Team team, String content, String nickname, String email) {
         if (team == null) throw new IllegalArgumentException("팀 정보가 없습니다!");
         this.team = team;
