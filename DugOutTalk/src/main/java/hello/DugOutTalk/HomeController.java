@@ -27,6 +27,7 @@ public class HomeController {
             return "home";
         }
 
+
         //세션이 유지되면 로그인으로 이동
         model.addAttribute("member", loginMember);
         return "main";
