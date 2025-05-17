@@ -7,6 +7,7 @@
 <body>
 <h1>MLB 리그 순위</h1>
 
+<!-- 리그 이름과 지구 이름 안 뜨는 오류 있음(수정 해야함) -->
 <div class="league-buttons">
     <a th:href="@{/mlb/mlbScore(leagueId='104')}" th:classappend="${selectedLeagueId == '104'} ? 'active'">
         내셔널리그
