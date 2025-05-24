@@ -14,6 +14,7 @@
            th:value="${selectedDate != null ? selectedDate : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
     <button type="submit">조회</button>
 </form>
+
 <div class="results" th:if="${resultData['dates']}">
     <div th:each="date : ${resultData['dates']}" class="game-date">
         <h3 th:text="${date['date']}"></h3>
